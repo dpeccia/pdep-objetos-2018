@@ -1,0 +1,9 @@
+import integrantes.*
+
+test "Fecha de nacimiento de Diego" {
+	assert.equals("23/03/98", diego.fechaDeNacimiento())
+}
+
+test "resolver el conflicto en git" {
+	assert.that(true)
+}
