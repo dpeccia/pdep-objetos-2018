@@ -1,0 +1,3 @@
+test "resolver el conflicto en git" {
+	assert.that(true)
+}
