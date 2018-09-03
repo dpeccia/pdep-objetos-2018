@@ -4,3 +4,6 @@ object diego {
 
 }
 
+object daiana {
+	method fechaDeNacimiento() = "11/03/99"
+}

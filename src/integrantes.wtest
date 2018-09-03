@@ -4,7 +4,12 @@ test "Fecha de nacimiento de Diego" {
 	assert.equals("23/03/98", diego.fechaDeNacimiento())
 }
 
+test "Fecha de nacimiento de Daiana" {
+	assert.equals("11/03/99", daiana.fechaDeNacimiento())
+}
+
 test "resolver el conflicto en git" {
 	// Comentario de Diego
+	//hecho por daiu
 	assert.that(true)
 }
