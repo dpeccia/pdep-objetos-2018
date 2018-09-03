@@ -9,5 +9,6 @@ test "Fecha de nacimiento de Daiana" {
 }
 
 test "resolver el conflicto en git" {
+	//hecho por daiu
 	assert.that(true)
 }
