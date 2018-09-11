@@ -1,20 +1,14 @@
 object rolando {
 
-	var fuerzaOscura = 5
+	var property fuerzaOscura = 5
 	var valorBaseDeLucha = 1
-	var hechizoPreferido = espectroMalefico
+	var property hechizoPreferido = espectroMalefico
 	var artefactos = #{}
 
 	method nivelDeHechiceria() = (3 * hechizoPreferido.poder()) + fuerzaOscura
 
 	method eclipse() {
 		fuerzaOscura *= 2
-	}
-
-	method fuerzaOscura() = fuerzaOscura
-
-	method cambiarHechizoPreferido(hechizo) {
-		hechizoPreferido = hechizo
 	}
 
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()
@@ -40,15 +34,11 @@ object rolando {
 // Hechizos
 object espectroMalefico {
 
-	var nombre = "Espectro malefico"
+	var property nombre = "Espectro malefico"
 
 	method poder() = nombre.size()
 
 	method esPoderoso() = nombre.size() > 15
-	
-	method cambiarNombre(nuevoNombre) {
-		nombre = nuevoNombre
-	}
 
 }
 
@@ -64,15 +54,13 @@ object hechizoBasico {
 //cambiar el nombre habilidad por puntosDeLucha
 object espadaDelDestino {
 
-	var habilidad = 3
-
-	method habilidad() = habilidad
+	var property habilidad = 3
 
 }
 
 object collarDivino {
 
-	var cantidadDePerlas = 10
+	var property cantidadDePerlas = 10
 
 	method habilidad() = cantidadDePerlas
 
@@ -87,7 +75,7 @@ object mascaraOscura {
 // Artefactos Lucha Avanzada
 object armadura {
 
-	var refuerzo //inicializar
+	var refuerzo // inicializar
 
 	method habilidad() = 2 + refuerzo.valorDelRefuerzo()
 
