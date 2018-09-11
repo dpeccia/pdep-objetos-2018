@@ -1,7 +1,7 @@
 object rolando {
 
 	var property fuerzaOscura = 5
-	var valorBaseDeLucha = 1
+	var property valorBaseDeLucha = 1
 	var property hechizoPreferido = espectroMalefico
 	var artefactos = #{}
 
@@ -21,13 +21,13 @@ object rolando {
 		artefactos.remove(artefacto)
 	}
 
-	method habilidadDeLucha() = valorBaseDeLucha + artefactos.sum({ artefacto => artefacto.habilidad() })
+	method habilidadDeLucha() = valorBaseDeLucha + artefactos.sum({ artefacto => artefacto.puntosDeLucha() })
 
 	method estaCargado() = artefactos.size() >= 5
 	
 	method tieneMayorLucha() = self.habilidadDeLucha() > self.nivelDeHechiceria()
 
-	method mejorPertenencia() = artefactos.max({ artefacto => artefacto.habilidad() })
+	method mejorPertenencia() = artefactos.max({ artefacto => artefacto.puntosDeLucha() })
 
 }
 
@@ -54,7 +54,7 @@ object hechizoBasico {
 //cambiar el nombre habilidad por puntosDeLucha
 object espadaDelDestino {
 
-	var property habilidad = 3
+	var property puntosDeLucha = 3
 
 }
 
@@ -62,13 +62,13 @@ object collarDivino {
 
 	var property cantidadDePerlas = 10
 
-	method habilidad() = cantidadDePerlas
+	method puntosDeLucha() = cantidadDePerlas
 
 }
 
 object mascaraOscura {
 
-	method habilidad() = if (rolando.fuerzaOscura() < 10) 4 else (rolando.fuerzaOscura() / 2)
+	method puntosDeLucha() = if (rolando.fuerzaOscura() < 10) 4 else (rolando.fuerzaOscura() / 2)
 
 }
 
@@ -77,13 +77,13 @@ object armadura {
 
 	var refuerzo // inicializar
 
-	method habilidad() = 2 + refuerzo.valorDelRefuerzo()
+	method puntosDeLucha() = 2 + refuerzo.valorDelRefuerzo()
 
 }
 
 
 object espejo {
-	method habilidad() = rolando.mejorPertenencia()
+	method puntosDeLucha() = rolando.mejorPertenencia()
 }
 
 object libroDeHechizos {
@@ -96,10 +96,8 @@ object libroDeHechizos {
 
 //refuerzos
 object cotaDeMalla {
-	
-	var refuerzo = 1
 
-	method valorDelRefuerzo() = refuerzo
+	method valorDelRefuerzo() = 1
 
 }
 
