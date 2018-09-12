@@ -24,7 +24,7 @@ object rolando {
 	method habilidadDeLucha() = valorBaseDeLucha + artefactos.sum({ artefacto => artefacto.puntosDeLucha() })
 
 	method estaCargado() = artefactos.size() >= 5
-	
+
 	method tieneMayorLucha() = self.habilidadDeLucha() > self.nivelDeHechiceria()
 
 	method mejorPertenencia() = artefactos.max({ artefacto => artefacto.puntosDeLucha() })
@@ -75,23 +75,28 @@ object mascaraOscura {
 // Artefactos Lucha Avanzada
 object armadura {
 
-	var refuerzo // inicializar
+	var property refuerzo // inicializar
 
 	method puntosDeLucha() = 2 + refuerzo.valorDelRefuerzo()
 
+	// consultar que pasaría si no hay ningun refuerzo
+	
 }
 
-
 object espejo {
+
 	method puntosDeLucha() = rolando.mejorPertenencia()
+
 }
 
 object libroDeHechizos {
+
 	const hechizos = #{}
-	
+
 	method poder() = hechizos.sum({ hechizo => hechizo.poder() })
-	//si el libro de hechizos se tiene como libro de hechizos a si mismo
-	//entra en una recursiva infinita por no tener caso base
+
+// si el libro de hechizos se tiene como libro de hechizos a si mismo
+// entra en una recursiva infinita por no tener caso base
 }
 
 //refuerzos
@@ -102,9 +107,16 @@ object cotaDeMalla {
 }
 
 object bendicion {
-	method valorDelRefuerzo() = rolando.nivelDeHechiceria()
+
+	method valorDelRefuerzo() = rolando.nivelDeHechiceria() // consultar
+
 }
 
 object hechizo {
-
+	
+	var property hechizoDeRefuerzo = hechizoBasico
+	
+	method valorDelRefuerzo() = hechizoDeRefuerzo.nivelDeHechiceria()
+	
 }
+
