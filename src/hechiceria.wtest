@@ -1,68 +1,68 @@
 import entrega1.*
 
-test "Nivel de hechiceria de Rolando" {
-
-	assert.equals(56, rolando.nivelDeHechiceria())
-
-}
-
-test "Cambiar nombre de espectro maléfico" {
-	espectroMalefico.nombre("Nuevo nombre del espectro maléfico")
-	assert.equals("Nuevo nombre del espectro maléfico", espectroMalefico.nombre())
-}
-
-test "Cambiar el hechizo preferido de Rolando" {
-	rolando.hechizoPreferido(hechizoBasico)
-	assert.equals(hechizoBasico, rolando.hechizoPreferido())
-}
-
-test "Rolando se cree poderoso" {
-	//asumiendo que el valor default no cambia
-	assert.that(rolando.seCreePoderoso())
-}
-
-test "Rolando no se cree poderoso" {
-	rolando.hechizoPreferido(hechizoBasico)
-	assert.notThat(rolando.seCreePoderoso())
-}
-
-test "Nivel de hechiceria cambiando el nombre del espectro malefico" {
+describe "Test de Hechiceria" {
+	test "Nivel de hechiceria de Rolando" {
 	
-	espectroMalefico.nombre("espectro superrecontramalefico muajajaja")
-	assert.equals(125, rolando.nivelDeHechiceria())
+		assert.equals(56, rolando.nivelDeHechiceria())
 	
-}
-
-test "Nivel de hechiceria cambiando el hechizo preferido" {
+	}
 	
-	rolando.hechizoPreferido(hechizoBasico)
-	assert.equals(35, rolando.nivelDeHechiceria())
+	test "Cambiar nombre de espectro maléfico" {
+		espectroMalefico.nombre("Nuevo nombre del espectro maléfico")
+		assert.equals("Nuevo nombre del espectro maléfico", espectroMalefico.nombre())
+	}
 	
-}
-
-test "Nivel de hechiceria cuando ocurre un eclipse" {
+	test "Cambiar el hechizo preferido de Rolando" {
+		rolando.hechizoPreferido(hechizoBasico)
+		assert.equals(hechizoBasico, rolando.hechizoPreferido())
+	}
 	
-	eclipse.nombre()
-	//todo:cambiar esto cuando cambiemos la manera de modelar el eclipse
-	assert.equals(61, rolando.nivelDeHechiceria())
+	test "Rolando se cree poderoso" {
+		assert.that(rolando.seCreePoderoso())
+	}
 	
-}
-
-test "Saber si el espectro malefico es poderoso" {
+	test "Rolando no se cree poderoso" {
+		rolando.hechizoPreferido(hechizoBasico)
+		assert.notThat(rolando.seCreePoderoso())
+	}
 	
-	assert.that(espectroMalefico.esPoderoso())
+	test "Nivel de hechiceria cambiando el nombre del espectro malefico" {
+		
+		espectroMalefico.nombre("espectro superrecontramalefico muajajaja")
+		assert.equals(125, rolando.nivelDeHechiceria())
+		
+	}
 	
-}
-
-test "Saber si el espectro malefico es poderoso si el nombre es pepe" {
+	test "Nivel de hechiceria cambiando el hechizo preferido" {
+		
+		rolando.hechizoPreferido(hechizoBasico)
+		assert.equals(35, rolando.nivelDeHechiceria())
+		
+	}
 	
-	espectroMalefico.nombre("pepe")
-	assert.notThat(espectroMalefico.esPoderoso())
+	test "Nivel de hechiceria cuando ocurre un eclipse" {
+		
+		eclipse.ocurrir()
+		assert.equals(61, rolando.nivelDeHechiceria())
+		
+	}
 	
-}
-
-test "Saber si el hechizo basico es poderoso" {
+	test "Saber si el espectro malefico es poderoso" {
+		
+		assert.that(espectroMalefico.esPoderoso())
+		
+	}
 	
-	assert.notThat(hechizoBasico.esPoderoso())
+	test "Saber si el espectro malefico es poderoso si el nombre es pepe" {
+		
+		espectroMalefico.nombre("pepe")
+		assert.notThat(espectroMalefico.esPoderoso())
+		
+	}
 	
+	test "Saber si el hechizo basico es poderoso" {
+		
+		assert.notThat(hechizoBasico.esPoderoso())
+		
+	}
 }

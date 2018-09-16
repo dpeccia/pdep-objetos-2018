@@ -27,7 +27,7 @@ object rolando {
 }
 
 object eclipse {
-	method nombre() { //todo: cambiar nombre y ver como modelarlo mejor
+	method ocurrir() {
 		fuerzaOscura.valor(fuerzaOscura.valor() * 2)
 	}
 }
