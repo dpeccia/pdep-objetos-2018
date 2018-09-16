@@ -1,6 +1,6 @@
 object rolando {
 
-	var property fuerzaOscura = 5
+	var property fuerzaOscura = fuerzaOscura.valor()
 	var property valorBaseDeLucha = 1
 	var property hechizoPreferido = espectroMalefico
 	var artefactos = #{}
@@ -31,6 +31,10 @@ object rolando {
 
 }
 
+object fuerzaOscura {
+	var property valor = 5
+}
+
 // Hechizos
 object espectroMalefico {
 
@@ -38,7 +42,7 @@ object espectroMalefico {
 
 	method poder() = nombre.size()
 
-	method esPoderoso() = nombre.size() > 15
+	method esPoderoso() = nombre.size() > 15 //no hay que hacer self.poder()?
 
 }
 
@@ -46,7 +50,7 @@ object hechizoBasico {
 
 	method poder() = 10
 
-	method esPoderoso() = false
+	method esPoderoso() = false // no hay que hacer self.poder() > 15?
 
 }
 
