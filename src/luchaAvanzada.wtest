@@ -1,0 +1,56 @@
+import entrega1.*
+
+describe "Test de Lucha Avanzada" {
+	method asignarArtefactosARolando() {
+		rolando.agregarArtefacto(espadaDelDestino)
+		rolando.agregarArtefacto(collarDivino)
+		rolando.agregarArtefacto(mascaraOscura)
+		rolando.agregarArtefacto(armadura)
+		rolando.agregarArtefacto(espejo)
+	}
+	test "Rolando está cargado" {
+		self.asignarArtefactosARolando()
+		assert.that(rolando.estaCargado())
+	}
+	test "Rolando no está cargado sin su armadura" {
+		self.asignarArtefactosARolando()
+		rolando.eliminarArtefacto(armadura)
+		assert.notThat(rolando.estaCargado())
+	}
+	test "Habilidad de Lucha de Rolando con todos sus artefactos" {
+		self.asignarArtefactosARolando()
+		assert.equals(20, rolando.habilidadDeLucha())	
+	}
+	test "Habilidad de Lucha de Rolando con bendición de refuerzo" {
+		self.asignarArtefactosARolando()
+		armadura.refuerzo(bendicion)
+		assert.equals(58, rolando.habilidadDeLucha())
+	}
+	test "Habilidad de Lucha de la armadura con cota de malla de refuerzo" {
+		armadura.refuerzo(cotaDeMalla)
+		assert.equals(3, armadura.puntosDeLucha())
+	}
+	test "Habilidad de Lucha de la armadura con hechizo básico de refuerzo" {
+		hechizo.hechizoDeRefuerzo(hechizoBasico)
+		armadura.refuerzo(hechizo)
+		assert.equals(12, armadura.puntosDeLucha())
+	}
+	test "Habilidad de Lucha de la armadura con hechizo espectro maléfico de refuerzo" {
+		hechizo.hechizoDeRefuerzo(espectroMalefico)
+		armadura.refuerzo(hechizo)
+		assert.equals(19, armadura.puntosDeLucha())
+	}
+	test "Habilidad de Lucha de Rolando si solo tiene el espejo" {
+		//asignarArtefactosARolando y despues borrar todos menos el espejo?
+		rolando.agregarArtefacto(espejo)
+		assert.equals(1, rolando.habilidadDeLucha())
+	}
+	test "Nivel de hechicería de Rolando con libro de hechizos como hechizo prefe" {
+		self.asignarArtefactosARolando()
+		rolando.hechizoPreferido(libroDeHechizos)
+		libroDeHechizos.agregarHechizo(espectroMalefico)
+		libroDeHechizos.agregarHechizo(hechizoBasico)
+		assert.equals(56, rolando.nivelDeHechiceria())
+	}
+	
+}

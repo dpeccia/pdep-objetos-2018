@@ -1,7 +1,7 @@
 object rolando {
 
 	var property valorBaseDeLucha = 1
-	var property hechizoPreferido = espectroMalefico
+	var property hechizoPreferido = espectroMalefico //esta bien que inicialice con esto?
 	var artefactos = #{}
 
 	method nivelDeHechiceria() = (3 * hechizoPreferido.poder()) + fuerzaOscura.valor()
@@ -22,7 +22,7 @@ object rolando {
 
 	method tieneMayorLucha() = self.habilidadDeLucha() > self.nivelDeHechiceria()
 
-	method mejorPertenencia() = artefactos.max({ artefacto => artefacto.puntosDeLucha() })
+	method mejorPertenencia() = artefactos.max({ artefacto => artefacto.puntosDeLucha()})
 
 }
 
@@ -82,17 +82,18 @@ object mascaraOscura {
 // Artefactos Lucha Avanzada
 object armadura {
 
-	var property refuerzo // inicializar
+	var property refuerzo = object {
+		method valorDelRefuerzo() = 0
+	}
 
 	method puntosDeLucha() = 2 + refuerzo.valorDelRefuerzo()
-
-	// consultar que pasaría si no hay ningun refuerzo
 	
 }
 
 object espejo {
 
 	method puntosDeLucha() = rolando.mejorPertenencia()
+	//esto no puede entrar en un loop infinito???
 
 }
 
@@ -100,7 +101,11 @@ object libroDeHechizos {
 
 	const hechizos = #{}
 
-	method poder() = hechizos.sum({ hechizo => hechizo.poder() })
+	method agregarHechizo(hechizo) {
+		hechizos.add(hechizo)
+	}
+
+	method poder() = hechizos.filter({ hechizo => hechizo.esPoderoso() }).sum({ hechizo => hechizo.poder() })
 
 // si el libro de hechizos se tiene como libro de hechizos a si mismo
 // entra en una recursiva infinita por no tener caso base
@@ -114,16 +119,19 @@ object cotaDeMalla {
 }
 
 object bendicion {
+	var property duenio = rolando
 
-	method valorDelRefuerzo() = rolando.nivelDeHechiceria() // consultar
+	method valorDelRefuerzo() = duenio.nivelDeHechiceria() // consultar
 
 }
 
 object hechizo {
 	
-	var property hechizoDeRefuerzo = hechizoBasico
+	var property hechizoDeRefuerzo = object {
+		method poder() = 0
+	}
 	
-	method valorDelRefuerzo() = hechizoDeRefuerzo.nivelDeHechiceria()
+	method valorDelRefuerzo() = hechizoDeRefuerzo.poder() //consultar
 	
 }
 
