@@ -1,15 +1,10 @@
 object rolando {
 
-	var property fuerzaOscura = fuerzaOscura.valor()
 	var property valorBaseDeLucha = 1
 	var property hechizoPreferido = espectroMalefico
 	var artefactos = #{}
 
-	method nivelDeHechiceria() = (3 * hechizoPreferido.poder()) + fuerzaOscura
-
-	method eclipse() {
-		fuerzaOscura *= 2
-	}
+	method nivelDeHechiceria() = (3 * hechizoPreferido.poder()) + fuerzaOscura.valor()
 
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()
 
@@ -31,8 +26,16 @@ object rolando {
 
 }
 
+object eclipse {
+	method nombre() { //todo: cambiar nombre y ver como modelarlo mejor
+		fuerzaOscura.valor(fuerzaOscura.valor() * 2)
+	}
+}
+
 object fuerzaOscura {
+	
 	var property valor = 5
+
 }
 
 // Hechizos
@@ -72,7 +75,7 @@ object collarDivino {
 
 object mascaraOscura {
 
-	method puntosDeLucha() = if (rolando.fuerzaOscura() < 10) 4 else (rolando.fuerzaOscura() / 2)
+	method puntosDeLucha() = if (fuerzaOscura.valor() =< 8) 4 else (fuerzaOscura.valor() / 2)
 
 }
 
