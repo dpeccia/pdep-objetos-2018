@@ -7,25 +7,6 @@ describe "Test de Hechiceria" {
 	
 	}
 	
-	test "Cambiar nombre de espectro maléfico" {
-		espectroMalefico.nombre("Nuevo nombre del espectro maléfico")
-		assert.equals("Nuevo nombre del espectro maléfico", espectroMalefico.nombre())
-	}
-	
-	test "Cambiar el hechizo preferido de Rolando" {
-		rolando.hechizoPreferido(hechizoBasico)
-		assert.equals(hechizoBasico, rolando.hechizoPreferido())
-	}
-	
-	test "Rolando se cree poderoso" {
-		assert.that(rolando.seCreePoderoso())
-	}
-	
-	test "Rolando no se cree poderoso" {
-		rolando.hechizoPreferido(hechizoBasico)
-		assert.notThat(rolando.seCreePoderoso())
-	}
-	
 	test "Nivel de hechiceria cambiando el nombre del espectro malefico" {
 		
 		espectroMalefico.nombre("espectro superrecontramalefico muajajaja")
