@@ -24,7 +24,7 @@ describe "Test de Lucha Avanzada" {
 	test "Habilidad de Lucha de Rolando con bendición de refuerzo" {
 		self.asignarArtefactosARolando()
 		armadura.refuerzo(bendicion)
-		assert.equals(58, rolando.habilidadDeLucha())
+		assert.equals(58, armadura.puntosDeLucha())
 	}
 	test "Habilidad de Lucha de la armadura con cota de malla de refuerzo" {
 		armadura.refuerzo(cotaDeMalla)
@@ -41,11 +41,10 @@ describe "Test de Lucha Avanzada" {
 		assert.equals(19, armadura.puntosDeLucha())
 	}
 	test "Habilidad de Lucha de Rolando si solo tiene el espejo" {
-		//asignarArtefactosARolando y despues borrar todos menos el espejo?
 		rolando.agregarArtefacto(espejo)
 		assert.equals(1, rolando.habilidadDeLucha())
 	}
-	test "Nivel de hechicería de Rolando con libro de hechizos como hechizo prefe" {
+	test "Nivel de hechicería de Rolando con libro de hechizos como hechizo preferido" {
 		self.asignarArtefactosARolando()
 		rolando.hechizoPreferido(libroDeHechizos)
 		libroDeHechizos.agregarHechizo(espectroMalefico)

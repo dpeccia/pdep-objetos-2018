@@ -1,8 +1,10 @@
 object rolando {
 
 	var property valorBaseDeLucha = 1
-	var property hechizoPreferido = espectroMalefico //esta bien que inicialice con esto?
-	var artefactos = #{}
+	var property hechizoPreferido = espectroMalefico
+	const artefactos = #{}
+	
+	method artefactos() = artefactos
 
 	method nivelDeHechiceria() = (3 * hechizoPreferido.poder()) + fuerzaOscura.valor()
 
@@ -22,18 +24,20 @@ object rolando {
 
 	method tieneMayorLucha() = self.habilidadDeLucha() > self.nivelDeHechiceria()
 
-	method mejorPertenencia() = artefactos.max({ artefacto => artefacto.puntosDeLucha()})
+	method mejorPertenencia() = artefactos.filter({ artefacto => artefacto != espejo}).max({ artefacto => artefacto.puntosDeLucha() })
 
 }
 
 object eclipse {
+
 	method ocurrir() {
 		fuerzaOscura.valor(fuerzaOscura.valor() * 2)
 	}
+
 }
 
 object fuerzaOscura {
-	
+
 	var property valor = 5
 
 }
@@ -45,7 +49,7 @@ object espectroMalefico {
 
 	method poder() = nombre.size()
 
-	method esPoderoso() = nombre.size() > 15 //no hay que hacer self.poder()?
+	method esPoderoso() = nombre.size() > 15
 
 }
 
@@ -53,12 +57,11 @@ object hechizoBasico {
 
 	method poder() = 10
 
-	method esPoderoso() = false // no hay que hacer self.poder() > 15?
+	method esPoderoso() = false
 
 }
 
 // Artefactos
-//cambiar el nombre habilidad por puntosDeLucha
 object espadaDelDestino {
 
 	var property puntosDeLucha = 3
@@ -67,7 +70,7 @@ object espadaDelDestino {
 
 object collarDivino {
 
-	var property cantidadDePerlas = 10
+	var property cantidadDePerlas = 5
 
 	method puntosDeLucha() = cantidadDePerlas
 
@@ -75,7 +78,7 @@ object collarDivino {
 
 object mascaraOscura {
 
-	method puntosDeLucha() = if (fuerzaOscura.valor() =< 8) 4 else (fuerzaOscura.valor() / 2)
+	method puntosDeLucha() = if (fuerzaOscura.valor() <= 8) 4 else (fuerzaOscura.valor() / 2)
 
 }
 
@@ -87,13 +90,18 @@ object armadura {
 	}
 
 	method puntosDeLucha() = 2 + refuerzo.valorDelRefuerzo()
-	
+
 }
 
 object espejo {
 
-	method puntosDeLucha() = rolando.mejorPertenencia()
-	//esto no puede entrar en un loop infinito???
+	method puntosDeLucha() {
+		if (rolando.artefactos() == #{ self }) {
+			return 0
+		} else {
+			return rolando.mejorPertenencia().puntosDeLucha()
+		}
+	}
 
 }
 
@@ -119,19 +127,20 @@ object cotaDeMalla {
 }
 
 object bendicion {
+
 	var property duenio = rolando
 
-	method valorDelRefuerzo() = duenio.nivelDeHechiceria() // consultar
+	method valorDelRefuerzo() = duenio.nivelDeHechiceria()
 
 }
 
 object hechizo {
-	
+
 	var property hechizoDeRefuerzo = object {
 		method poder() = 0
 	}
-	
-	method valorDelRefuerzo() = hechizoDeRefuerzo.poder() //consultar
-	
+
+	method valorDelRefuerzo() = hechizoDeRefuerzo.poder()
+
 }
 
