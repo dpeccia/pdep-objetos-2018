@@ -2,10 +2,8 @@ object rolando {
 
 	var property valorBaseDeLucha = 1
 	var property hechizoPreferido = espectroMalefico
-	const artefactos = #{}
+	const property artefactos = #{}
 	
-	method artefactos() = artefactos
-
 	method nivelDeHechiceria() = (3 * hechizoPreferido.poder()) + fuerzaOscura.valor()
 
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()

@@ -2,14 +2,14 @@ import entrega1.*
 
 describe "Test de Lucha" {
 
-	method inicializarObjetos() {
+	method asignarArtefactosARolando() {
 		rolando.agregarArtefacto(espadaDelDestino)
 		rolando.agregarArtefacto(collarDivino)
 		rolando.agregarArtefacto(mascaraOscura)
 	}
 	
 	test "Habilidad de lucha de Rolando es el valor base cuando no tiene artefactos" {
-		self.inicializarObjetos()
+		self.asignarArtefactosARolando()
 		rolando.eliminarArtefacto(espadaDelDestino)
 		rolando.eliminarArtefacto(collarDivino)
 		rolando.eliminarArtefacto(mascaraOscura)
@@ -17,18 +17,18 @@ describe "Test de Lucha" {
 	}
 
 	test "Habilidad de lucha de Rolando con todos sus artefactos" {
-		self.inicializarObjetos()
+		self.asignarArtefactosARolando()
 		assert.equals(13, rolando.habilidadDeLucha())
 	}
 
 	test "Habilidad de lucha de Rolando con todos sus artefactos cambiando cant de perlas" {
-		self.inicializarObjetos()
+		self.asignarArtefactosARolando()
 		collarDivino.cantidadDePerlas(3)
 		assert.equals(11, rolando.habilidadDeLucha())
 	}
 
 	test "Habilidad de lucha de Rolando con todos sus artefactos cambiando valor base" {
-		self.inicializarObjetos()
+		self.asignarArtefactosARolando()
 		rolando.valorBaseDeLucha(8)
 		assert.equals(20, rolando.habilidadDeLucha())
 	}
@@ -39,7 +39,7 @@ describe "Test de Lucha" {
 	}
 
 	test "Habilidad de lucha de Rolando sin máscara oscura" {
-		self.inicializarObjetos()
+		self.asignarArtefactosARolando()
 		rolando.eliminarArtefacto(mascaraOscura)
 		assert.equals(9, rolando.habilidadDeLucha())
 	}
