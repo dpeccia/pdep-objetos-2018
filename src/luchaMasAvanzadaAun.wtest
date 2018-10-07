@@ -1,4 +1,4 @@
-import entrega1.*
+import entrega2.*
 
 describe "Test de Lucha Avanzada" {
 	method asignarArtefactosARolando() {

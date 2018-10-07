@@ -1,9 +1,9 @@
-object rolando {
+class Personaje {
 
 	var property valorBaseDeLucha = 1
-	var property hechizoPreferido = espectroMalefico
+	var property hechizoPreferido
 	const property artefactos = #{}
-	
+
 	method nivelDeHechiceria() = (3 * hechizoPreferido.poder()) + fuerzaOscura.valor()
 
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()
@@ -23,8 +23,9 @@ object rolando {
 	method tieneMayorLucha() = self.habilidadDeLucha() > self.nivelDeHechiceria()
 
 	method filtrarArtefactos(_artefacto) = artefactos.filter{ artefacto => artefacto !== _artefacto }
-	
-	method mejorPertenencia(objeto) = objeto.max({ artefacto => artefacto.puntosDeLucha() }) 
+
+	method mejorPertenencia(objeto) = objeto.max({ artefacto => artefacto.puntosDeLucha() })
+
 }
 
 object eclipse {
@@ -42,21 +43,23 @@ object fuerzaOscura {
 }
 
 // Hechizos
-object espectroMalefico {
-
-	var property nombre = "Espectro malefico"
-
-	method poder() = nombre.size()
-
-	method esPoderoso() = nombre.size() > 15
-
-}
 
 object hechizoBasico {
 
 	method poder() = 10
 
 	method esPoderoso() = false
+
+}
+
+class HechizoDeLogos {
+
+	var property nombre
+	var property numeroAlAzar = new Range(1, 10).anyOne()
+
+	method poder() = nombre.size() * numeroAlAzar
+
+	method esPoderoso() = nombre.size() > 15
 
 }
 
@@ -93,12 +96,12 @@ object armadura {
 }
 
 object espejo {
-	
-	var property duenio = rolando
+
+	var property duenio
 	var artefactosSinEspejo
 
 	method puntosDeLucha() {
-		if (rolando.artefactos() == #{ self }) {
+		if (duenio.artefactos() == #{ self }) {
 			return 0
 		} else {
 			artefactosSinEspejo = duenio.filtrarArtefactos(self)
@@ -131,7 +134,7 @@ object cotaDeMalla {
 
 object bendicion {
 
-	var property duenio = rolando
+	var property duenio
 
 	method valorDelRefuerzo() = duenio.nivelDeHechiceria()
 

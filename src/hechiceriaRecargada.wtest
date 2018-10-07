@@ -1,6 +1,15 @@
-import entrega1.*
+import entrega2.*
 
 describe "Test de Hechiceria" {
+
+	const rolando = new Personaje()
+	const espectroMalefico = new HechizoDeLogos()
+
+	fixture {
+		espectroMalefico.nombre("espectro malefico")
+		espectroMalefico.numeroAlAzar(1)
+		rolando.hechizoPreferido(espectroMalefico)
+	}
 
 	test "Nivel de hechiceria de Rolando" {
 		assert.equals(56, rolando.nivelDeHechiceria())
