@@ -21,8 +21,10 @@ object rolando {
 	method estaCargado() = artefactos.size() >= 5
 
 	method tieneMayorLucha() = self.habilidadDeLucha() > self.nivelDeHechiceria()
+
+	method filtrarArtefactos(_artefacto) = artefactos.filter{ artefacto => artefacto !== _artefacto }
 	
-	method mejorPertenencia(_artefacto) = artefactos.filter{ artefacto => artefacto !== _artefacto }.max({ artefacto => artefacto.puntosDeLucha() }) 
+	method mejorPertenencia(objeto) = objeto.max({ artefacto => artefacto.puntosDeLucha() }) 
 }
 
 object eclipse {
@@ -93,13 +95,14 @@ object armadura {
 object espejo {
 	
 	var property duenio = rolando
-	//var artefactosSinEspejo = duenio.filtrarArtefactos(self)
+	var artefactosSinEspejo
 
 	method puntosDeLucha() {
 		if (rolando.artefactos() == #{ self }) {
 			return 0
 		} else {
-			return duenio.mejorPertenencia(self).puntosDeLucha()
+			artefactosSinEspejo = duenio.filtrarArtefactos(self)
+			return duenio.mejorPertenencia(artefactosSinEspejo).puntosDeLucha()
 		}
 	}
 
