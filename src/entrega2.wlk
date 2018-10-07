@@ -64,7 +64,7 @@ class HechizoDeLogos {
 }
 
 // Artefactos
-object espadaDelDestino {
+class Arma {
 
 	var property puntosDeLucha = 3
 
@@ -72,15 +72,18 @@ object espadaDelDestino {
 
 object collarDivino {
 
-	var property cantidadDePerlas = 5
+	var property cantidadDePerlas
 
 	method puntosDeLucha() = cantidadDePerlas
 
 }
 
-object mascaraOscura {
+class Mascara {
+	
+	var property indiceDeOscuridad
+	var property minimo = 4
 
-	method puntosDeLucha() = if (fuerzaOscura.valor() <= 8) 4 else (fuerzaOscura.valor() / 2)
+	method puntosDeLucha() = if ((fuerzaOscura.valor() / 2) * indiceDeOscuridad <= 4) minimo else (fuerzaOscura.valor() / 2 * indiceDeOscuridad)
 
 }
 

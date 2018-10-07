@@ -2,14 +2,19 @@ import entrega2.*
 
 describe "Test de Lucha" {
 
-	method asignarArtefactosARolando() {
+	const rolando = new Personaje()
+	const espadaDelDestino = new Arma()
+	const mascaraOscura = new Mascara()
+	
+	fixture {
+		mascaraOscura.indiceDeOscuridad(1)
+		collarDivino.cantidadDePerlas(5)
 		rolando.agregarArtefacto(espadaDelDestino)
 		rolando.agregarArtefacto(collarDivino)
 		rolando.agregarArtefacto(mascaraOscura)
 	}
 	
 	test "Habilidad de lucha de Rolando es el valor base cuando no tiene artefactos" {
-		self.asignarArtefactosARolando()
 		rolando.eliminarArtefacto(espadaDelDestino)
 		rolando.eliminarArtefacto(collarDivino)
 		rolando.eliminarArtefacto(mascaraOscura)
@@ -17,18 +22,15 @@ describe "Test de Lucha" {
 	}
 
 	test "Habilidad de lucha de Rolando con todos sus artefactos" {
-		self.asignarArtefactosARolando()
 		assert.equals(13, rolando.habilidadDeLucha())
 	}
 
 	test "Habilidad de lucha de Rolando con todos sus artefactos cambiando cant de perlas" {
-		self.asignarArtefactosARolando()
 		collarDivino.cantidadDePerlas(3)
 		assert.equals(11, rolando.habilidadDeLucha())
 	}
 
 	test "Habilidad de lucha de Rolando con todos sus artefactos cambiando valor base" {
-		self.asignarArtefactosARolando()
 		rolando.valorBaseDeLucha(8)
 		assert.equals(20, rolando.habilidadDeLucha())
 	}
@@ -39,7 +41,6 @@ describe "Test de Lucha" {
 	}
 
 	test "Habilidad de lucha de Rolando sin máscara oscura" {
-		self.asignarArtefactosARolando()
 		rolando.eliminarArtefacto(mascaraOscura)
 		assert.equals(9, rolando.habilidadDeLucha())
 	}
