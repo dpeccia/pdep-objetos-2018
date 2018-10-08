@@ -87,7 +87,7 @@ class Mascara {
 	var property indiceDeOscuridad = 0
 	var property poderMinimo = 4
 
-	method puntosDeLucha(duenio) = poderMinimo.max(fuerzaOscura.valor()/2 * indiceDeOscuridad)
+	method puntosDeLucha(duenio) = poderMinimo.max((fuerzaOscura.valor()/2) * indiceDeOscuridad)
 }
 
 // Artefactos Lucha Avanzada
