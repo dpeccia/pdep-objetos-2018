@@ -94,9 +94,10 @@ class Mascara {
 class Armadura {
 
 	var property refuerzo = ningunRefuerzo
+	var property valorBase = 0
 
 	method precio() = refuerzo.precio()
-	method puntosDeLucha(duenio) = duenio.valorBaseDeLucha() + refuerzo.valorDelRefuerzo(duenio)
+	method puntosDeLucha(duenio) = valorBase + refuerzo.valorDelRefuerzo(duenio)
 
 }
 

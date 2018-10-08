@@ -3,12 +3,13 @@ import entrega2.*
 describe "Test de Lucha Avanzada" {
 	
 	const rolando = new Personaje()
-	const armadura = new Armadura()
+	const armadura = new Armadura(valorBase = 2)
 	const espadaDelDestino = new Arma()
 	const mascaraOscura = new Mascara()
 	const cotaDeMalla = new CotaDeMalla()
 	const espectroMalefico = new HechizoDeLogos()
 	fixture {
+		collarDivino.cantidadDePerlas(5)
 		rolando.agregarArtefacto(espadaDelDestino)
 		rolando.agregarArtefacto(collarDivino)
 		rolando.agregarArtefacto(mascaraOscura)
