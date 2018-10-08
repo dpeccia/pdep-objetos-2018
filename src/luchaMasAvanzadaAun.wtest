@@ -6,9 +6,10 @@ describe "Test de Lucha Avanzada" {
 	const armadura = new Armadura(valorBase = 2)
 	const espadaDelDestino = new Arma()
 	const mascaraOscura = new Mascara()
-	const cotaDeMalla = new CotaDeMalla()
+	const cotaDeMalla = new CotaDeMalla(refuerzo = 1)
 	const espectroMalefico = new HechizoDeLogos()
 	fixture {
+		rolando.hechizoPreferido(espectroMalefico)
 		collarDivino.cantidadDePerlas(5)
 		rolando.agregarArtefacto(espadaDelDestino)
 		rolando.agregarArtefacto(collarDivino)
@@ -49,7 +50,11 @@ describe "Test de Lucha Avanzada" {
 		assert.equals(19, armadura.puntosDeLucha(rolando))
 	}
 	test "Habilidad de Lucha de Rolando si solo tiene el espejo" {
-		rolando.agregarArtefacto(espejo)
+		rolando.eliminarArtefacto(espadaDelDestino)
+		rolando.eliminarArtefacto(collarDivino)
+		rolando.eliminarArtefacto(mascaraOscura)
+		rolando.eliminarArtefacto(armadura)
+		rolando.eliminarArtefacto(espejo)
 		assert.equals(1, rolando.habilidadDeLucha())
 	}
 	test "Nivel de hechicería de Rolando con libro de hechizos como hechizo preferido" {
