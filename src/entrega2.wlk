@@ -106,7 +106,7 @@ object espejo {
 	var artefactosSinEspejo
 
 	method puntosDeLucha(duenio) {
-		if (duenio.artefactos() == #{ self }) {
+		if (duenio.artefactos() === #{ self }) {
 			return 0
 		} else {
 			artefactosSinEspejo = duenio.filtrarArtefactos(self)

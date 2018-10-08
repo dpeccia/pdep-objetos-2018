@@ -1,8 +1,8 @@
 import entrega2.*
 
 describe "Test de Lucha Avanzada" {
-	const rolando = new Personaje()
 	
+	const rolando = new Personaje()
 	const armadura = new Armadura()
 	const espadaDelDestino = new Arma()
 	const mascaraOscura = new Mascara()
