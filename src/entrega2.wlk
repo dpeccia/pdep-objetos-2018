@@ -43,7 +43,7 @@ object fuerzaOscura {
 
 object hechizoBasico {
 
-	const property precio = 10
+	method precio() = 10
 
 	method poder() = 10
 
@@ -53,12 +53,12 @@ object hechizoBasico {
 
 class HechizoDeLogos {
 
-	var property precio = self.poder()
 	var property nombre = ''
 	var property numeroAlAzar = new Range(1, 10).anyOne()
 
-	method poder() = nombre.size() * numeroAlAzar
 
+	method precio() = self.poder()
+	method poder() = nombre.size() * numeroAlAzar
 	method esPoderoso() = self.poder() > 15
 
 }
@@ -66,17 +66,17 @@ class HechizoDeLogos {
 // Artefactos
 class Arma {
 	
-	var property precio = 5 * puntosDeLucha
 	var property puntosDeLucha = 3
 	
-	method puntosDeLucha(duenio) = puntosDeLucha
-
+	method precio() = 5 * puntosDeLucha
+	method puntosDeLucha(duenio) = self.puntosDeLucha()
+	//no hay una manera mejor de hacer esto?
 }
 
 object collarDivino {
 
 	var property cantidadDePerlas = 0
-	var property precio = 2 * cantidadDePerlas
+	method precio() = 2 * cantidadDePerlas
 
 	method puntosDeLucha(duenio) = cantidadDePerlas
 
@@ -155,7 +155,7 @@ object hechizo {
 }
 
 object ningunRefuerzo {
-	const property precio = 0
+	method precio() = 0
 	method valorDelRefuerzo(duenio) = 0
 }
 
