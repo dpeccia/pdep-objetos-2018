@@ -29,17 +29,13 @@ class Personaje {
 
 }
 
-object eclipse {
-
-	method ocurrir() {
-		fuerzaOscura.valor(fuerzaOscura.valor() * 2)
-	}
-
-}
-
 object fuerzaOscura {
 
 	var property valor = 5
+	
+	method hacerEclipse() {
+		valor = valor * 2
+	}
 
 }
 

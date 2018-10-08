@@ -26,7 +26,7 @@ describe "Test de Hechiceria" {
 	}
 
 	test "Nivel de hechiceria cuando ocurre un eclipse" {
-		eclipse.ocurrir()
+		fuerzaOscura.hacerEclipse()
 		assert.equals(61, rolando.nivelDeHechiceria())
 	}
 
