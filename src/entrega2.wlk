@@ -3,6 +3,7 @@ class Personaje {
 	var property valorBaseDeLucha = 1
 	var property hechizoPreferido
 	const property artefactos = #{}
+	var property monedasOro = 10
 
 	method nivelDeHechiceria() = (3 * hechizoPreferido.poder()) + fuerzaOscura.valor()
 
@@ -46,6 +47,8 @@ object fuerzaOscura {
 
 object hechizoBasico {
 
+	const property precio = 10
+
 	method poder() = 10
 
 	method esPoderoso() = false
@@ -54,25 +57,27 @@ object hechizoBasico {
 
 class HechizoDeLogos {
 
-	var property nombre
-	var property numeroAlAzar = new Range(1, 10).anyOne()
+	var property precio = self.poder()
+	var property nombre = ''
 
-	method poder() = nombre.size() * numeroAlAzar
+	method poder() = nombre.size() * new Range(1, 10).anyOne()
 
-	method esPoderoso() = nombre.size() > 15
+	method esPoderoso() = self.poder() > 15
 
 }
 
 // Artefactos
 class Arma {
-
+	
+	var property precio = 5 * self.puntosDeLucha()
 	var property puntosDeLucha = 3
 
 }
 
 object collarDivino {
 
-	var property cantidadDePerlas
+	var property cantidadDePerlas = 0
+	var property precio = 2 * cantidadDePerlas
 
 	method puntosDeLucha() = cantidadDePerlas
 
@@ -80,21 +85,21 @@ object collarDivino {
 
 class Mascara {
 	
-	var property indiceDeOscuridad
-	var property minimo = 4
+	var property indiceDeOscuridad = 0
+	var property poderMinimo = 4
 
-	method puntosDeLucha() = if ((fuerzaOscura.valor() / 2) * indiceDeOscuridad <= 4) minimo else (fuerzaOscura.valor() / 2 * indiceDeOscuridad)
+	method puntosDeLucha() = if ((fuerzaOscura.valor() / 2) * indiceDeOscuridad <= 4) poderMinimo else (fuerzaOscura.valor() / 2 * indiceDeOscuridad)
 
 }
 
 // Artefactos Lucha Avanzada
-object armadura {
+class Armadura {
 
-	var property refuerzo = object {
-		method valorDelRefuerzo() = 0
-	}
+	var property refuerzo = ningunRefuerzo
 
-	method puntosDeLucha() = 2 + refuerzo.valorDelRefuerzo()
+	method precio() = refuerzo.precio()
+	method puntosDeLucha(valorBase) = valorBase + refuerzo.valorDelRefuerzo()
+	//en el caso de la bendicion no se el dueño, que mandamos?!
 
 }
 
@@ -129,17 +134,17 @@ object libroDeHechizos {
 }
 
 //refuerzos
-object cotaDeMalla {
+class CotaDeMalla {
 
-	method valorDelRefuerzo() = 1
+	var property refuerzo = 0
+
+	method valorDelRefuerzo(duenio) = refuerzo
 
 }
 
 object bendicion {
 
-	var property duenio
-
-	method valorDelRefuerzo() = duenio.nivelDeHechiceria()
+	method valorDelRefuerzo(duenio) = duenio.nivelDeHechiceria()
 
 }
 
@@ -149,7 +154,12 @@ object hechizo {
 		method poder() = 0
 	}
 
-	method valorDelRefuerzo() = hechizoDeRefuerzo.poder()
+	method valorDelRefuerzo(duenio) = hechizoDeRefuerzo.poder()
 
+}
+
+object ningunRefuerzo {
+	const property precio = 0
+	method valorDelRefuerzo(duenio) = 0
 }
 
