@@ -37,7 +37,7 @@ describe "Test de Lucha" {
 
 	test "Valor de lucha de máscara oscura cuando hay eclipse" {
 		fuerzaOscura.hacerEclipse()
-		assert.equals(5, mascaraOscura.puntosDeLucha())
+		assert.equals(5, mascaraOscura.puntosDeLucha(rolando))
 	}
 
 	test "Habilidad de lucha de Rolando sin máscara oscura" {

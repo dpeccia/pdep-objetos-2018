@@ -1,7 +1,7 @@
 class Personaje {
 
 	var property valorBaseDeLucha = 1
-	var property hechizoPreferido
+	var property hechizoPreferido = hechizoBasico
 	const property artefactos = #{}
 	var property monedasOro = 10
 
@@ -17,7 +17,7 @@ class Personaje {
 		artefactos.remove(artefacto)
 	}
 
-	method habilidadDeLucha() = valorBaseDeLucha + artefactos.sum({ artefacto => artefacto.puntosDeLucha() })
+	method habilidadDeLucha() = valorBaseDeLucha + artefactos.sum({ artefacto => artefacto.puntosDeLucha(self) })
 
 	method estaCargado() = artefactos.size() >= 5
 
@@ -25,7 +25,7 @@ class Personaje {
 
 	method filtrarArtefactos(_artefacto) = artefactos.filter{ artefacto => artefacto !== _artefacto }
 
-	method mejorPertenencia(objeto) = objeto.max({ artefacto => artefacto.puntosDeLucha() })
+	method mejorPertenencia(objeto) = objeto.max({ artefacto => artefacto.puntosDeLucha(self) })
 
 }
 
@@ -55,8 +55,9 @@ class HechizoDeLogos {
 
 	var property precio = self.poder()
 	var property nombre = ''
+	var property numeroAlAzar = new Range(1, 10).anyOne()
 
-	method poder() = nombre.size() * new Range(1, 10).anyOne()
+	method poder() = nombre.size() * numeroAlAzar
 
 	method esPoderoso() = self.poder() > 15
 
@@ -65,8 +66,10 @@ class HechizoDeLogos {
 // Artefactos
 class Arma {
 	
-	var property precio = 5 * self.puntosDeLucha()
+	var property precio = 5 * puntosDeLucha
 	var property puntosDeLucha = 3
+	
+	method puntosDeLucha(duenio) = puntosDeLucha
 
 }
 
@@ -75,7 +78,7 @@ object collarDivino {
 	var property cantidadDePerlas = 0
 	var property precio = 2 * cantidadDePerlas
 
-	method puntosDeLucha() = cantidadDePerlas
+	method puntosDeLucha(duenio) = cantidadDePerlas
 
 }
 
@@ -84,7 +87,7 @@ class Mascara {
 	var property indiceDeOscuridad = 0
 	var property poderMinimo = 4
 
-	method puntosDeLucha() = if ((fuerzaOscura.valor() / 2) * indiceDeOscuridad <= 4) poderMinimo else (fuerzaOscura.valor() / 2 * indiceDeOscuridad)
+	method puntosDeLucha(duenio) = if ((fuerzaOscura.valor() / 2) * indiceDeOscuridad <= 4) poderMinimo else (fuerzaOscura.valor() / 2 * indiceDeOscuridad)
 
 }
 
@@ -94,22 +97,20 @@ class Armadura {
 	var property refuerzo = ningunRefuerzo
 
 	method precio() = refuerzo.precio()
-	method puntosDeLucha(valorBase) = valorBase + refuerzo.valorDelRefuerzo()
-	//en el caso de la bendicion no se el dueño, que mandamos?!
+	method puntosDeLucha(duenio) = duenio.valorBaseDeLucha() + refuerzo.valorDelRefuerzo(duenio)
 
 }
 
 object espejo {
 
-	var property duenio
 	var artefactosSinEspejo
 
-	method puntosDeLucha() {
+	method puntosDeLucha(duenio) {
 		if (duenio.artefactos() == #{ self }) {
 			return 0
 		} else {
 			artefactosSinEspejo = duenio.filtrarArtefactos(self)
-			return duenio.mejorPertenencia(artefactosSinEspejo).puntosDeLucha()
+			return duenio.mejorPertenencia(artefactosSinEspejo).puntosDeLucha(duenio)
 		}
 	}
 
