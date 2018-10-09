@@ -8,6 +8,7 @@ describe "Test de Lucha Avanzada" {
 	const mascaraOscura = new Mascara()
 	const cotaDeMalla = new CotaDeMalla(refuerzo = 1)
 	const espectroMalefico = new HechizoDeLogos()
+	const hechizo = new Hechizo()
 	fixture {
 		rolando.hechizoPreferido(espectroMalefico)
 		collarDivino.cantidadDePerlas(5)

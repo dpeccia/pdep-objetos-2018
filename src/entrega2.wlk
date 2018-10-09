@@ -3,13 +3,19 @@ class Personaje {
 	var property valorBaseDeLucha = 1
 	var property hechizoPreferido = hechizoBasico
 	const property artefactos = #{}
-	var property monedasOro = 10
+	var property monedasOro = 100
+
+	method hechizoPreferido(hechizo) {
+		feriaHechiceria.obtenerNuevoHechizo(self, hechizo)
+		hechizoPreferido = hechizo
+	}
 
 	method nivelDeHechiceria() = (3 * hechizoPreferido.poder()) + fuerzaOscura.valor()
 
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()
 
 	method agregarArtefacto(artefacto) {
+		feriaHechiceria.obtenerArtefacto(self, artefacto)
 		artefactos.add(artefacto)
 	}
 
@@ -26,6 +32,17 @@ class Personaje {
 	method filtrarArtefactos(_artefacto) = artefactos.filter{ artefacto => artefacto !== _artefacto }
 
 	method mejorPertenencia(objeto) = objeto.max({ artefacto => artefacto.puntosDeLucha(self) })
+	
+	method cumplirObjetivo() {
+		monedasOro += 10
+	}
+	
+	method pagar(precio) {
+		if(monedasOro < precio) {
+			throw new Exception("No alcanzan las monedas porque sale " + precio + " pero solo tiene " + monedasOro)
+		}
+		monedasOro -= precio
+	}
 
 }
 
@@ -105,6 +122,7 @@ object espejo {
 
 	var artefactosSinEspejo
 
+	method precio() = 90
 	method puntosDeLucha(duenio) {
 		if (duenio.artefactos() === #{ self }) {
 			return 0
@@ -120,11 +138,15 @@ object libroDeHechizos {
 
 	const hechizos = #{}
 
+	method precio() = 10 * hechizos.size() + self.hechizosPoderosos().sum({ hechizo => hechizo.poder() })
+
 	method agregarHechizo(hechizo) {
 		hechizos.add(hechizo)
 	}
+	
+	method hechizosPoderosos() = hechizos.filter({ hechizo => hechizo.esPoderoso() })
 
-	method poder() = hechizos.filter({ hechizo => hechizo.esPoderoso() }).sum({ hechizo => hechizo.poder() })
+	method poder() = self.hechizosPoderosos().sum({ hechizo => hechizo.poder() })
 
 // si el libro de hechizos se tiene como libro de hechizos a si mismo
 // entra en una recursiva infinita por no tener caso base
@@ -135,28 +157,49 @@ class CotaDeMalla {
 
 	var property refuerzo = 0
 
+	method precio(armadura) = refuerzo/2
 	method valorDelRefuerzo(duenio) = refuerzo
 
 }
 
 object bendicion {
+	
+	method precio(armadura) = armadura.valorBase()
 
 	method valorDelRefuerzo(duenio) = duenio.nivelDeHechiceria()
 
 }
 
-object hechizo {
+class Hechizo {
 
 	var property hechizoDeRefuerzo = object {
 		method poder() = 0
+		method precio(armadura) = 0
 	}
+	
+	method precio(armadura) = armadura.valorBase() + hechizoDeRefuerzo.precio(armadura)
 
 	method valorDelRefuerzo(duenio) = hechizoDeRefuerzo.poder()
 
 }
 
 object ningunRefuerzo {
-	method precio() = 0
+	method precio(armadura) = 2
 	method valorDelRefuerzo(duenio) = 0
+}
+
+object feriaHechiceria {
+	method obtenerNuevoHechizo(personaje, hechizo) {
+		var precio = hechizo.precio()
+		precio -= personaje.hechizoPreferido().precio()/2
+		if (precio > 0){
+			personaje.pagar(precio)
+			//cobrarle al personaje el precio restante
+		}
+		personaje.hechizoPreferido(hechizo)
+	}
+	method obtenerArtefacto(personaje, artefacto) {
+		personaje.pagar(artefacto.precio())
+	}
 }
 
