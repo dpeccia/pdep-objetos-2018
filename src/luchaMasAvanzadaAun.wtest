@@ -1,55 +1,58 @@
 import entrega2.*
 
 describe "Test de Lucha Avanzada" {
-	
-	const rolando = new Personaje()
+
 	const armadura = new Armadura(valorBase = 2)
 	const espadaDelDestino = new Arma()
 	const mascaraOscura = new Mascara()
 	const cotaDeMalla = new CotaDeMalla(refuerzo = 1)
 	const espectroMalefico = new HechizoDeLogos()
 	const hechizo = new Hechizo()
+	const rolando = new Personaje(artefactos = #{ espadaDelDestino, collarDivino, mascaraOscura, armadura, espejo })
+
 	fixture {
 		rolando.hechizoPreferido(espectroMalefico)
 		collarDivino.cantidadDePerlas(5)
-		rolando.agregarArtefacto(espadaDelDestino)
-		rolando.agregarArtefacto(collarDivino)
-		rolando.agregarArtefacto(mascaraOscura)
-		rolando.agregarArtefacto(armadura)
-		rolando.agregarArtefacto(espejo)
 		mascaraOscura.indiceDeOscuridad(1)
 		espectroMalefico.nombre("espectro malefico")
 		espectroMalefico.numeroAlAzar(1)
 	}
-	
+
 	test "Rolando está cargado" {
 		assert.that(rolando.estaCargado())
 	}
+
 	test "Rolando no está cargado sin su armadura" {
 		rolando.eliminarArtefacto(armadura)
 		assert.notThat(rolando.estaCargado())
 	}
+
 	test "Habilidad de Lucha de Rolando con todos sus artefactos" {
-		assert.equals(20, rolando.habilidadDeLucha())	
+		assert.equals(20, rolando.habilidadDeLucha())
 	}
+
 	test "Habilidad de Lucha de Rolando con bendición de refuerzo" {
 		armadura.refuerzo(bendicion)
 		assert.equals(58, armadura.puntosDeLucha(rolando))
 	}
+
 	test "Habilidad de Lucha de la armadura con cota de malla de refuerzo" {
 		armadura.refuerzo(cotaDeMalla)
 		assert.equals(3, armadura.puntosDeLucha(rolando))
 	}
+
 	test "Habilidad de Lucha de la armadura con hechizo básico de refuerzo" {
 		hechizo.hechizoDeRefuerzo(hechizoBasico)
 		armadura.refuerzo(hechizo)
 		assert.equals(12, armadura.puntosDeLucha(rolando))
 	}
+
 	test "Habilidad de Lucha de la armadura con hechizo espectro maléfico de refuerzo" {
 		hechizo.hechizoDeRefuerzo(espectroMalefico)
 		armadura.refuerzo(hechizo)
 		assert.equals(19, armadura.puntosDeLucha(rolando))
 	}
+
 	test "Habilidad de Lucha de Rolando si solo tiene el espejo" {
 		rolando.eliminarArtefacto(espadaDelDestino)
 		rolando.eliminarArtefacto(collarDivino)
@@ -58,11 +61,13 @@ describe "Test de Lucha Avanzada" {
 		rolando.eliminarArtefacto(espejo)
 		assert.equals(1, rolando.habilidadDeLucha())
 	}
+
 	test "Nivel de hechicería de Rolando con libro de hechizos como hechizo preferido" {
 		rolando.hechizoPreferido(libroDeHechizos)
 		libroDeHechizos.agregarHechizo(espectroMalefico)
 		libroDeHechizos.agregarHechizo(hechizoBasico)
 		assert.equals(56, rolando.nivelDeHechiceria())
 	}
-	
+
 }
+

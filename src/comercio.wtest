@@ -1,6 +1,7 @@
 import entrega2.*
 
 describe "Test de Comercio" {
+
 	const hechizoRaro = new HechizoDeLogos(nombre = "alacachula cachicomula", numeroAlAzar = 1)
 	const xenia = new Personaje(hechizoPreferido = hechizoRaro)
 	const thor = new Personaje()
@@ -9,29 +10,35 @@ describe "Test de Comercio" {
 	const armadura = new Armadura()
 	const cotaDeMalla = new CotaDeMalla(refuerzo = 5)
 	const armaduraConMalla = new Armadura(refuerzo = cotaDeMalla)
+
 	fixture {
 		collarDivino.cantidadDePerlas(5)
 	}
-	
+
 	test "Precio de lista del alacachula cachicomula" {
 		assert.equals(hechizoRaro.precio(), 22)
 	}
+
 	test "Monedas de Xenia al obtener hechizo basico" {
 		xenia.hechizoPreferido(hechizoBasico)
 		assert.equals(xenia.monedasOro(), 100)
 	}
+
 	test "Monedas de Thor al obtener alacachula cachicomula" {
 		thor.hechizoPreferido(hechizoRaro)
 		assert.equals(thor.monedasOro(), 83)
 	}
+
 	test "Monedas de Thor al canjear 2 veces hechizo básico" {
 		thor.hechizoPreferido(hechizoBasico)
 		thor.hechizoPreferido(hechizoBasico)
 		assert.equals(thor.monedasOro(), 90)
 	}
+
 	test "Loki quiere comprar alacachula cachicomula y no le alcanza" {
-		assert.throwsException({ loki.hechizoPreferido(hechizoRaro) })
+		assert.throwsException({ loki.hechizoPreferido(hechizoRaro)})
 	}
+
 	test "Monedas de Xenia al comprar una espada, un collar divino, una armadura sin refuerzo y otra armadura con malla de cota" {
 		xenia.agregarArtefacto(espadaDelDestino)
 		xenia.agregarArtefacto(collarDivino)
@@ -39,6 +46,7 @@ describe "Test de Comercio" {
 		xenia.agregarArtefacto(armaduraConMalla)
 		assert.equals(70.5, xenia.monedasOro())
 	}
+
 	test "Cantidad de artefactos de Xenia al comprar una espada, un collar divino, una armadura sin refuerzo y otra armadura con malla de cota" {
 		xenia.agregarArtefacto(espadaDelDestino)
 		xenia.agregarArtefacto(collarDivino)
@@ -46,18 +54,25 @@ describe "Test de Comercio" {
 		xenia.agregarArtefacto(armaduraConMalla)
 		assert.equals(4, xenia.artefactos().size())
 	}
-	test "Monedas de Thor al obtener una armadura con bendición como refuerzo y una armadura reforzada con el hechizo alacachula" {	
-		const armaduraConBendicion = new Armadura(refuerzo = bendicion)thor.agregarArtefacto(armaduraConBendicion)
-		thor.agregarArtefacto(hechizoRaro)
+
+	test "Monedas de Thor al obtener una armadura con bendición como refuerzo y una armadura reforzada con el hechizo alacachula" {
+		const armaduraConHechizoRaro = new Armadura(refuerzo = hechizoRaro, valorBase = 2)
+		const armaduraConBendicion = new Armadura(refuerzo = bendicion, valorBase = 2)
+		thor.agregarArtefacto(armaduraConBendicion)
+		thor.agregarArtefacto(armaduraConHechizoRaro)
 		assert.equals(74, thor.monedasOro())
 	}
+
 	test "Loki intenta comprar espejo pero no puede" {
-		assert.throwsException({ loki.agregarArtefacto(espejo) })
+		assert.throwsException({ loki.agregarArtefacto(espejo)})
 	}
+
 	test "Monedas de Xenia al canjear libro de hechizos" {
 		libroDeHechizos.agregarHechizo(hechizoRaro)
 		libroDeHechizos.agregarHechizo(hechizoBasico)
 		xenia.hechizoPreferido(libroDeHechizos)
 		assert.equals(69, xenia.monedasOro())
 	}
+
 }
+

@@ -5,7 +5,7 @@ describe "Test de Lucha" {
 	const rolando = new Personaje()
 	const espadaDelDestino = new Arma()
 	const mascaraOscura = new Mascara()
-	
+
 	fixture {
 		mascaraOscura.indiceDeOscuridad(1)
 		collarDivino.cantidadDePerlas(5)
@@ -13,7 +13,7 @@ describe "Test de Lucha" {
 		rolando.agregarArtefacto(collarDivino)
 		rolando.agregarArtefacto(mascaraOscura)
 	}
-	
+
 	test "Habilidad de lucha de Rolando es el valor base cuando no tiene artefactos" {
 		rolando.eliminarArtefacto(espadaDelDestino)
 		rolando.eliminarArtefacto(collarDivino)
