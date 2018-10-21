@@ -2,7 +2,7 @@ import entrega2.*
 
 describe "Test de Lucha" {
 
-	const rolando = new Personaje()
+	const rolando = new Personaje(capacidadCarga = 200)
 	const espadaDelDestino = new Arma()
 	const mascaraOscura = new Mascara()
 

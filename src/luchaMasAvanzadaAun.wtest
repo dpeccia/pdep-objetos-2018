@@ -8,7 +8,7 @@ describe "Test de Lucha Avanzada" {
 	const cotaDeMalla = new CotaDeMalla(refuerzo = 1)
 	const espectroMalefico = new HechizoDeLogosPrueba()
 	const hechizo = new Hechizo()
-	const rolando = new Personaje(artefactos = #{ espadaDelDestino, collarDivino, mascaraOscura, armadura, espejo })
+	const rolando = new Personaje(artefactos = #{ espadaDelDestino, collarDivino, mascaraOscura, armadura, espejo }, capacidadCarga = 200)
 
 	fixture {
 		rolando.hechizoPreferido(espectroMalefico)

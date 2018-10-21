@@ -2,7 +2,7 @@ import entrega2.*
 
 describe "Test de Hechiceria" {
 
-	const rolando = new Personaje()
+	const rolando = new Personaje(capacidadCarga = 200)
 	const espectroMalefico = new HechizoDeLogosPrueba()
 
 	fixture {

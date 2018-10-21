@@ -4,9 +4,9 @@ describe "Test de Comercio" {
 
 	const hechizoRaro = new HechizoDeLogosPrueba(nombre = "alacachula cachicomula")
 	const hechizo = new Hechizo(hechizoDeRefuerzo = hechizoRaro)
-	const xenia = new Personaje(hechizoPreferido = hechizoRaro)
-	const thor = new Personaje()
-	const loki = new Personaje(monedasOro = 5)
+	const xenia = new Personaje(hechizoPreferido = hechizoRaro, capacidadCarga = 200)
+	const thor = new Personaje(capacidadCarga = 200)
+	const loki = new Personaje(monedasOro = 5, capacidadCarga = 200)
 	const espadaDelDestino = new Arma()
 	const armadura = new Armadura()
 	const cotaDeMalla = new CotaDeMalla(refuerzo = 5)
