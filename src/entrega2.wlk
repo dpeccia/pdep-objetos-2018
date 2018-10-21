@@ -6,7 +6,12 @@ class Personaje {
 	var property monedasOro = 100
 
 	method hechizoPreferido(hechizo) {
-		feriaHechiceria.obtenerNuevoHechizo(self, hechizo)
+		var precio = hechizo.precio()
+		precio -= hechizoPreferido.precio() / 2
+		if (precio > 0) {
+			self.pagar(precio)
+			// cobrarle al personaje el precio restante
+		}
 		hechizoPreferido = hechizo
 	}
 
@@ -15,7 +20,7 @@ class Personaje {
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()
 
 	method agregarArtefacto(artefacto) {
-		feriaHechiceria.obtenerArtefacto(self, artefacto)
+		self.pagar(artefacto.precio())
 		artefactos.add(artefacto)
 	}
 
@@ -196,23 +201,6 @@ object ningunRefuerzo {
 	method precio(armadura) = 2
 
 	method valorDelRefuerzo(duenio) = 0
-
-}
-
-object feriaHechiceria {
-
-	method obtenerNuevoHechizo(personaje, hechizo) {
-		var precio = hechizo.precio()
-		precio -= personaje.hechizoPreferido().precio() / 2
-		if (precio > 0) {
-			personaje.pagar(precio)
-		// cobrarle al personaje el precio restante
-		}
-	}
-
-	method obtenerArtefacto(personaje, artefacto) {
-		personaje.pagar(artefacto.precio())
-	}
 
 }
 
