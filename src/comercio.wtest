@@ -2,7 +2,7 @@ import entrega2.*
 
 describe "Test de Comercio" {
 
-	const hechizoRaro = new HechizoDeLogos(nombre = "alacachula cachicomula", numeroAlAzar = 1)
+	const hechizoRaro = new HechizoDeLogosPrueba(nombre = "alacachula cachicomula")
 	const hechizo = new Hechizo(hechizoDeRefuerzo = hechizoRaro)
 	const xenia = new Personaje(hechizoPreferido = hechizoRaro)
 	const thor = new Personaje()

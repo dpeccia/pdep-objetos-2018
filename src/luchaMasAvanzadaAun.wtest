@@ -6,7 +6,7 @@ describe "Test de Lucha Avanzada" {
 	const espadaDelDestino = new Arma()
 	const mascaraOscura = new Mascara()
 	const cotaDeMalla = new CotaDeMalla(refuerzo = 1)
-	const espectroMalefico = new HechizoDeLogos()
+	const espectroMalefico = new HechizoDeLogosPrueba()
 	const hechizo = new Hechizo()
 	const rolando = new Personaje(artefactos = #{ espadaDelDestino, collarDivino, mascaraOscura, armadura, espejo })
 
@@ -15,7 +15,6 @@ describe "Test de Lucha Avanzada" {
 		collarDivino.cantidadDePerlas(5)
 		mascaraOscura.indiceDeOscuridad(1)
 		espectroMalefico.nombre("espectro malefico")
-		espectroMalefico.numeroAlAzar(1)
 	}
 
 	test "Rolando está cargado" {

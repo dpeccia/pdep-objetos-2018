@@ -79,11 +79,22 @@ object hechizoBasico {
 class HechizoDeLogos {
 
 	var property nombre = ''
-	var property numeroAlAzar = new Range(1, 10).anyOne()
 
 	method precio() = self.poder()
 
-	method poder() = nombre.size() * numeroAlAzar
+	method poder() = nombre.size() * new Range(1, 10).anyOne()
+
+	method esPoderoso() = self.poder() > 15
+
+}
+
+class HechizoDeLogosPrueba {
+
+	var property nombre = ''
+
+	method precio() = self.poder()
+
+	method poder() = nombre.size() * 1
 
 	method esPoderoso() = self.poder() > 15
 

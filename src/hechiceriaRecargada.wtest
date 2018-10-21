@@ -3,11 +3,10 @@ import entrega2.*
 describe "Test de Hechiceria" {
 
 	const rolando = new Personaje()
-	const espectroMalefico = new HechizoDeLogos()
+	const espectroMalefico = new HechizoDeLogosPrueba()
 
 	fixture {
 		espectroMalefico.nombre("espectro malefico")
-		espectroMalefico.numeroAlAzar(1)
 		rolando.hechizoPreferido(espectroMalefico)
 	}
 
