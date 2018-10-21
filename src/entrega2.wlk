@@ -74,8 +74,6 @@ class HechizoDeLogos {
 
 	method precio() = self.poder()
 
-	method precio(armadura) = self.precio() + armadura.valorBase()
-
 	method poder() = nombre.size() * numeroAlAzar
 
 	method esPoderoso() = self.poder() > 15
@@ -184,7 +182,7 @@ class Hechizo {
 
 	var property hechizoDeRefuerzo = object {
 		method poder() = 0
-		method precio(armadura) = 0
+		method precio() = 0
 	}
 
 	method precio(armadura) = armadura.valorBase() + hechizoDeRefuerzo.precio()

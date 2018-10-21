@@ -3,6 +3,7 @@ import entrega2.*
 describe "Test de Comercio" {
 
 	const hechizoRaro = new HechizoDeLogos(nombre = "alacachula cachicomula", numeroAlAzar = 1)
+	const hechizo = new Hechizo(hechizoDeRefuerzo = hechizoRaro)
 	const xenia = new Personaje(hechizoPreferido = hechizoRaro)
 	const thor = new Personaje()
 	const loki = new Personaje(monedasOro = 5)
@@ -56,7 +57,7 @@ describe "Test de Comercio" {
 	}
 
 	test "Monedas de Thor al obtener una armadura con bendición como refuerzo y una armadura reforzada con el hechizo alacachula" {
-		const armaduraConHechizoRaro = new Armadura(refuerzo = hechizoRaro, valorBase = 2)
+		const armaduraConHechizoRaro = new Armadura(refuerzo = hechizo, valorBase = 2)
 		const armaduraConBendicion = new Armadura(refuerzo = bendicion, valorBase = 2)
 		thor.agregarArtefacto(armaduraConBendicion)
 		thor.agregarArtefacto(armaduraConHechizoRaro)
