@@ -43,10 +43,14 @@ class Personaje {
 	}
 
 	method pagar(precio) {
+		self.validarPrecio(precio)
+		monedasOro -= precio
+	}
+	
+	method validarPrecio(precio) {
 		if (monedasOro < precio) {
 			throw new Exception("No alcanzan las monedas porque sale " + precio + " pero solo tiene " + monedasOro)
 		}
-		monedasOro -= precio
 	}
 
 }
