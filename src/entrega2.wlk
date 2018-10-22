@@ -5,11 +5,11 @@ class Personaje {
 	const property artefactos = #{}
 	var property monedasOro = 100
 	var capacidadCarga
-	
+
 	constructor(_capacidadCarga) {
 		capacidadCarga = _capacidadCarga
 	}
-	
+
 	method capacidadCarga() = capacidadCarga
 
 	method hechizoPreferido(hechizo) {
@@ -17,7 +17,7 @@ class Personaje {
 		precio -= hechizoPreferido.precio() / 2
 		if (precio > 0) {
 			self.pagar(precio)
-			// cobrarle al personaje el precio restante
+		// cobrarle al personaje el precio restante
 		}
 		hechizoPreferido = hechizo
 	}
@@ -28,13 +28,13 @@ class Personaje {
 
 	method agregarArtefacto(artefacto) {
 		self.validarArtefacto(artefacto)
-		capacidadCarga -= artefacto.peso(self)
+		capacidadCarga -= artefacto.pesoTotal(self)
 		self.pagar(artefacto.precio())
 		artefactos.add(artefacto)
 	}
 
 	method eliminarArtefacto(artefacto) {
-		capacidadCarga += artefacto.peso(self)
+		capacidadCarga += artefacto.pesoTotal(self)
 		artefactos.remove(artefacto)
 	}
 
@@ -56,17 +56,54 @@ class Personaje {
 		self.validarPrecio(precio)
 		monedasOro -= precio
 	}
-	
+
 	method validarPrecio(precio) {
 		if (monedasOro < precio) {
 			throw new Exception("No alcanzan las monedas porque sale " + precio + " pero solo tiene " + monedasOro)
 		}
 	}
+
 	method validarArtefacto(artefacto) {
-		if (capacidadCarga < artefacto.peso(self)) {
-			throw new Exception("La capacidad de carga (" + capacidadCarga + ") es menor al peso del artefacto (" + artefacto.peso() + ").")
+		if (capacidadCarga < artefacto.pesoTotal(self)) {
+			throw new Exception("La capacidad de carga (" + capacidadCarga + ") es menor al peso del artefacto (" + artefacto.pesoTotal() + ").")
 		}
 	}
+
+}
+
+class NPC inherits Personaje {
+
+	var property nivel
+	
+	override method habilidadDeLucha() = super() * nivel.valor()
+
+}
+
+class Nivel {
+
+	var property valor
+
+	constructor(_valor) {
+		self.valor(_valor)
+	}
+
+}
+
+object facil {
+
+	method valor() = 1
+
+}
+
+object moderado {
+
+	method valor() = 2
+
+}
+
+object dificil {
+
+	method valor() = 4
 
 }
 
@@ -116,24 +153,21 @@ class HechizoDeLogosPrueba {
 }
 
 object hechizoComercial {
-	
+
 	var property nombre = ''
-	
 	var property porcentaje = 0.2
-	
 	var property multiplicador = 2
-	
+
 	method poder() = nombre.size() * porcentaje * multiplicador
-	
+
 	method esPoderoso() = self.poder() > 15
+
 }
 
 // Artefactos
 class Arma inherits Artefacto {
 
 	var property puntosDeLucha = 3
-	
-	method peso(duenio) = 0
 
 	method precio() = 5 * puntosDeLucha
 
@@ -141,11 +175,11 @@ class Arma inherits Artefacto {
 
 }
 
-object collarDivino inherits Artefacto{
+object collarDivino inherits Artefacto {
 
 	var property cantidadDePerlas = 0
-	
-	method peso(duenio) = 0.5 * cantidadDePerlas
+
+	override method pesoTotal(duenio) = super(duenio) + 0.5 * cantidadDePerlas
 
 	method precio() = 2 * cantidadDePerlas
 
@@ -157,9 +191,9 @@ class Mascara inherits Artefacto {
 
 	var property indiceDeOscuridad = 0
 	var property poderMinimo = 4
-	
-	method peso(duenio) = (self.puntosDeLucha(duenio).div(3) - self.factorDeCorreccion()) * indiceDeOscuridad
-	
+
+	override method pesoTotal(duenio) = super(duenio) + 0.max(self.puntosDeLucha(duenio) - 3)
+
 	method precio() = 0
 
 	method puntosDeLucha(duenio) = poderMinimo.max((fuerzaOscura.valor() / 2) * indiceDeOscuridad)
@@ -167,32 +201,33 @@ class Mascara inherits Artefacto {
 }
 
 class Artefacto {
-	
+
 	var property fechaDeCompra = new Date()
-	
+	var property peso = 0
+
 	method diasDesdeCompra() = new Date() - fechaDeCompra
-	
-	method factorDeCorreccion() = 1.min(self.diasDesdeCompra()/1000)
+
+	method pesoTotal(duenio) = 0.max(peso - self.factorDeCorreccion())
+
+	method factorDeCorreccion() = 1.min(self.diasDesdeCompra() / 100)
+
 }
 
 // Artefactos Lucha Avanzada
-
-class Armadura {
+class Armadura inherits Artefacto {
 
 	var property refuerzo = ningunRefuerzo
 	var property valorBase = 3
 
-	method peso(duenio) = refuerzo.peso()
-	
+	override method pesoTotal(duenio) = super(duenio) + refuerzo.peso()
+
 	method precio() = refuerzo.precio(self)
 
 	method puntosDeLucha(duenio) = valorBase + refuerzo.valorDelRefuerzo(duenio)
 
 }
 
-object espejo {
-
-	method peso(duenio) = 0
+object espejo inherits Artefacto {
 
 	method precio() = 90
 
@@ -211,8 +246,6 @@ object espejo {
 object libroDeHechizos {
 
 	const hechizos = #{}
-	
-	method peso(duenio) = 0
 
 	method precio() = 10 * hechizos.size() + self.hechizosPoderosos().sum({ hechizo => hechizo.poder() })
 
@@ -232,7 +265,7 @@ object libroDeHechizos {
 class CotaDeMalla {
 
 	var property refuerzo = 0
-	
+
 	method peso() = 1
 
 	method precio(armadura) = refuerzo / 2
@@ -242,7 +275,7 @@ class CotaDeMalla {
 }
 
 object bendicion {
-	
+
 	method peso() = 0
 
 	method precio(armadura) = armadura.valorBase()
