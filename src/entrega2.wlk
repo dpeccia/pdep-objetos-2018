@@ -5,12 +5,19 @@ class Personaje {
 	const property artefactos = #{}
 	var property monedasOro = 100
 	var capacidadCarga
+	var pesoCargado = 0
 
 	constructor(_capacidadCarga) {
 		capacidadCarga = _capacidadCarga
 	}
-
-	method capacidadCarga() = capacidadCarga
+	
+	/* por que esto no funca?
+	 * constructor(_capacidadCarga, _artefactos) {
+		capacidadCarga = _capacidadCarga
+		_artefactos.forEach({artefacto => self.validarArtefacto(artefacto); self.agregarArtefacto(artefacto)})
+	}*/
+	
+	method pesoCargado() = pesoCargado
 
 	method hechizoPreferido(hechizo) {
 		var precio = hechizo.precio()
@@ -28,13 +35,13 @@ class Personaje {
 
 	method agregarArtefacto(artefacto) {
 		self.validarArtefacto(artefacto)
-		capacidadCarga -= artefacto.pesoTotal(self)
+		pesoCargado += artefacto.pesoTotal(self)
 		self.pagar(artefacto.precio())
 		artefactos.add(artefacto)
 	}
 
 	method eliminarArtefacto(artefacto) {
-		capacidadCarga += artefacto.pesoTotal(self)
+		pesoCargado -= artefacto.pesoTotal(self)
 		artefactos.remove(artefacto)
 	}
 
@@ -64,7 +71,7 @@ class Personaje {
 	}
 
 	method validarArtefacto(artefacto) {
-		if (capacidadCarga < artefacto.pesoTotal(self)) {
+		if (capacidadCarga - pesoCargado < artefacto.pesoTotal(self)) {
 			throw new Exception("La capacidad de carga (" + capacidadCarga + ") es menor al peso del artefacto (" + artefacto.pesoTotal() + ").")
 		}
 	}
@@ -73,7 +80,7 @@ class Personaje {
 
 class NPC inherits Personaje {
 
-	var property nivel
+	var property nivel = facil
 	
 	override method habilidadDeLucha() = super() * nivel.valor()
 
@@ -154,7 +161,7 @@ class HechizoDeLogosPrueba {
 
 object hechizoComercial {
 
-	var property nombre = ''
+	var property nombre = 'el hechizo comercial'
 	var property porcentaje = 0.2
 	var property multiplicador = 2
 
@@ -177,7 +184,7 @@ class Arma inherits Artefacto {
 
 object collarDivino inherits Artefacto {
 
-	var property cantidadDePerlas = 0
+	var property cantidadDePerlas = 5
 
 	override method pesoTotal(duenio) = super(duenio) + 0.5 * cantidadDePerlas
 
@@ -192,7 +199,7 @@ class Mascara inherits Artefacto {
 	var property indiceDeOscuridad = 0
 	var property poderMinimo = 4
 
-	override method pesoTotal(duenio) = super(duenio) + 0.max(self.puntosDeLucha(duenio) - 3)
+	override method pesoTotal(duenio) = super(duenio) + 0.max(self.puntosDeLucha(duenio) - 3) * indiceDeOscuridad
 
 	method precio() = 0
 
@@ -308,4 +315,5 @@ object ningunRefuerzo {
 	method valorDelRefuerzo(duenio) = 0
 
 }
+
 

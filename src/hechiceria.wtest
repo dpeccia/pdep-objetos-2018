@@ -1,0 +1,18 @@
+import entrega2.*
+
+describe "Test de Hechiceria" {
+	const hechizoLogos = new HechizoDeLogos(nombre = "espectro malefico")
+	const furibunda = new Personaje(hechizoPreferido = hechizoComercial, capacidadCarga = 200)
+	
+	test "Nivel de hechiceria de Furibunda" {
+		assert.equals(29, furibunda.nivelDeHechiceria())		
+	}
+	
+	test "Hechizo comercial no es poderoso" {
+		assert.notThat(hechizoComercial.esPoderoso())
+	}
+	
+	test "Espectro malefico es poderoso" {
+		assert.that(hechizoLogos.esPoderoso())
+	}
+}
