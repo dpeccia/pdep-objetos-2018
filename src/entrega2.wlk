@@ -10,13 +10,12 @@ class Personaje {
 	constructor(_capacidadCarga) {
 		capacidadCarga = _capacidadCarga
 	}
-	
+
 	/* por que esto no funca?
 	 * constructor(_capacidadCarga, _artefactos) {
-		capacidadCarga = _capacidadCarga
-		_artefactos.forEach({artefacto => self.validarArtefacto(artefacto); self.agregarArtefacto(artefacto)})
-	}*/
-	
+	 * 	capacidadCarga = _capacidadCarga
+	 * 	_artefactos.forEach({artefacto => self.validarArtefacto(artefacto); self.agregarArtefacto(artefacto)})
+	 }*/
 	method pesoCargado() = pesoCargado
 
 	method hechizoPreferido(hechizo) {
@@ -33,10 +32,10 @@ class Personaje {
 
 	method seCreePoderoso() = hechizoPreferido.esPoderoso()
 
-	method agregarArtefacto(artefacto) {
+	method comprarArtefacto(artefacto, comerciante) {
 		self.validarArtefacto(artefacto)
 		pesoCargado += artefacto.pesoTotal(self)
-		self.pagar(artefacto.precio())
+		comerciante.cobrar(artefacto, self)
 		artefactos.add(artefacto)
 	}
 
@@ -80,8 +79,12 @@ class Personaje {
 
 class NPC inherits Personaje {
 
-	var property nivel = facil
+	var property nivel
 	
+	constructor(_capacidadCarga, _nivel) = super(_capacidadCarga) {
+		nivel = _nivel
+	}
+
 	override method habilidadDeLucha() = super() * nivel.valor()
 
 }
@@ -114,6 +117,40 @@ object dificil {
 
 }
 
+class ComercianteIndependiente {
+
+	var property comision = 0
+
+	method cobrar(artefacto, comprador) {
+		comprador.pagar(artefacto.precio() + comision)
+	}
+
+}
+
+class ComercianteRegistrado {
+
+	method cobrar(artefacto, comprador) {
+		comprador.pagar(artefacto.precio() * 1.21)
+	}
+
+}
+
+class ComercianteConImpuestoALasGanancias {
+
+	const minimoNoImponible
+	var diferenciaDeImportes = 0
+
+	method cobrar(artefacto, comprador) {
+		if (artefacto.precio() < minimoNoImponible) {
+			comprador.pagar(artefacto.precio())
+		} else {
+			diferenciaDeImportes = artefacto.precio() - minimoNoImponible
+			comprador.pagar(artefacto.precio() + diferenciaDeImportes * 0.35)
+		}
+	}
+
+}
+
 object fuerzaOscura {
 
 	var property valor = 5
@@ -127,7 +164,7 @@ object fuerzaOscura {
 // Hechizos
 object hechizoBasico {
 
-	method precio() = 10
+	method precio() = self.poder()
 
 	method poder() = 10
 
@@ -164,6 +201,8 @@ object hechizoComercial {
 	var property nombre = 'el hechizo comercial'
 	var property porcentaje = 0.2
 	var property multiplicador = 2
+	
+	method precio() = self.poder()
 
 	method poder() = nombre.size() * porcentaje * multiplicador
 
@@ -176,7 +215,7 @@ class Arma inherits Artefacto {
 
 	var property puntosDeLucha = 3
 
-	method precio() = 5 * puntosDeLucha
+	method precio() = 5 * peso
 
 	method puntosDeLucha(duenio) = puntosDeLucha
 
@@ -201,7 +240,7 @@ class Mascara inherits Artefacto {
 
 	override method pesoTotal(duenio) = super(duenio) + 0.max(self.puntosDeLucha(duenio) - 3) * indiceDeOscuridad
 
-	method precio() = 0
+	method precio() = 10 * indiceDeOscuridad
 
 	method puntosDeLucha(duenio) = poderMinimo.max((fuerzaOscura.valor() / 2) * indiceDeOscuridad)
 
@@ -315,5 +354,4 @@ object ningunRefuerzo {
 	method valorDelRefuerzo(duenio) = 0
 
 }
-
 

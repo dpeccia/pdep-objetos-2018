@@ -1,0 +1,28 @@
+import entrega2.*
+
+describe "Test de NPC´s" {
+
+	const navi = new NPC(capacidadCarga = 200, nivel = facil)
+	const ashleyGraham = new NPC(capacidadCarga = 200, nivel = moderado)
+	const mascaraClara = new Mascara()
+
+	fixture {
+		ashleyGraham.valorBaseDeLucha(5)
+		ashleyGraham.comprarArtefacto(mascaraClara, new ComercianteIndependiente())
+	}
+
+	test "Habilidad de lucha de navi" {
+		assert.equals(1, navi.habilidadDeLucha())
+	}
+
+	test "Habilidad de lucha de Ashley Graham" {
+		assert.equals(18, ashleyGraham.habilidadDeLucha())
+	}
+
+	test "Habilidad de lucha de Ashley Graham con nivel dificil" {
+		ashleyGraham.nivel(dificil)
+		assert.equals(36, ashleyGraham.habilidadDeLucha())
+	}
+
+}
+
