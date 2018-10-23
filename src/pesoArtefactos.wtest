@@ -15,7 +15,7 @@ describe "Test de Peso de Artefactos" {
 	const hechizoImpar = new Hechizo(hechizoDeRefuerzo = espectroMalefico)
 	const armaduraHechizoImpar = new Armadura(refuerzo = hechizoImpar, peso = 12)
 	const armaduraSinRefuerzo = new Armadura(peso = 12)
-	const mockHnos = new ComercianteIndependiente()
+	const mockHnos = new Comerciante()
 	const merlin = new Personaje(capacidadCarga = 10)
 	const ursula = new Personaje(capacidadCarga = 200)
 
@@ -76,7 +76,7 @@ describe "Test de Peso de Artefactos" {
 	}
 
 	test "Merlin intenta comprar armadura con hechizo par" {
-		assert.notThat(merlin.comprarArtefacto(armaduraHechizoPar, mockHnos))
+		assert.throwsException({ merlin.comprarArtefacto(armaduraHechizoPar, mockHnos)})
 	}
 
 	test "Peso final de Ursula al desprenderse de armadura" {

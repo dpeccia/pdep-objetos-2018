@@ -11,11 +11,6 @@ class Personaje {
 		capacidadCarga = _capacidadCarga
 	}
 
-	/* por que esto no funca?
-	 * constructor(_capacidadCarga, _artefactos) {
-	 * 	capacidadCarga = _capacidadCarga
-	 * 	_artefactos.forEach({artefacto => self.validarArtefacto(artefacto); self.agregarArtefacto(artefacto)})
-	 }*/
 	method pesoCargado() = pesoCargado
 
 	method hechizoPreferido(hechizo) {
@@ -71,7 +66,7 @@ class Personaje {
 
 	method validarArtefacto(artefacto) {
 		if (capacidadCarga - pesoCargado < artefacto.pesoTotal(self)) {
-			throw new Exception("La capacidad de carga (" + capacidadCarga + ") es menor al peso del artefacto (" + artefacto.pesoTotal() + ").")
+			throw new Exception("La capacidad de carga (" + capacidadCarga + ") es menor al peso del artefacto (" + artefacto.pesoTotal(self) + ").")
 		}
 	}
 
@@ -117,27 +112,50 @@ object dificil {
 
 }
 
+class Comerciante {
+	var property tipo = new ComercianteIndependiente()
+	
+	method cobrar(artefacto, comprador) {
+		tipo.cobrar(artefacto, comprador)
+	}
+	
+	method cambiarTipo() {
+		tipo.cambiarSituacion(self)
+	}
+}
+
 class ComercianteIndependiente {
 
 	var property comision = 0
 
 	method cobrar(artefacto, comprador) {
-		comprador.pagar(artefacto.precio() + comision)
+		comprador.pagar(artefacto.precio() + comision * artefacto.precio())
+	}
+	
+	method cambiarSituacion(comerciante) {
+		comision = comision * 2
+		if (comision > 0.21) {
+			comerciante.tipo(comercianteRegistrado)
+		}
 	}
 
 }
 
-class ComercianteRegistrado {
+object comercianteRegistrado {
 
 	method cobrar(artefacto, comprador) {
 		comprador.pagar(artefacto.precio() * 1.21)
 	}
+	
+	method cambiarSituacion(comerciante) {
+		comerciante.tipo(comercianteConImpuestoALasGanancias)
+	}
 
 }
 
-class ComercianteConImpuestoALasGanancias {
+object comercianteConImpuestoALasGanancias {
 
-	const minimoNoImponible
+	var property minimoNoImponible = 0
 	var diferenciaDeImportes = 0
 
 	method cobrar(artefacto, comprador) {
@@ -147,6 +165,10 @@ class ComercianteConImpuestoALasGanancias {
 			diferenciaDeImportes = artefacto.precio() - minimoNoImponible
 			comprador.pagar(artefacto.precio() + diferenciaDeImportes * 0.35)
 		}
+	}
+	
+	method cambiarSituacion(comerciante) {
+		
 	}
 
 }

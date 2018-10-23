@@ -1,0 +1,55 @@
+import entrega2.*
+
+describe "Test de comercio avanzado" {
+	const comercianteIndependiente = new ComercianteIndependiente(comision = 0.09)
+	const pastoriza = new Comerciante(tipo = comercianteIndependiente)
+	const prieto = new Comerciante(tipo = comercianteRegistrado)
+	const fermepin = new Comerciante(tipo = comercianteConImpuestoALasGanancias)
+	const ursula = new Personaje(capacidadCarga = 200)
+	const mascaraOscura = new Mascara(indiceDeOscuridad = 1, peso = 3, poderMinimo = 3)
+
+	fixture {
+		ursula.monedasOro(100)
+		comercianteConImpuestoALasGanancias.minimoNoImponible(5)
+	}
+	
+	test "Ursula le compra mascara oscura a Pastoriza" {
+		ursula.comprarArtefacto(mascaraOscura, pastoriza)
+		assert.equals(89.1, ursula.monedasOro())
+	}
+	
+	test "Ursula le compra mascara oscura a Prieto" {
+		ursula.comprarArtefacto(mascaraOscura, prieto)
+		assert.equals(87.9, ursula.monedasOro())
+	}
+
+	test "Ursula le compra mascara oscura a Fermepin" {
+		ursula.comprarArtefacto(mascaraOscura, fermepin)
+		assert.equals(88.25, ursula.monedasOro())
+	}
+	
+	test "Ursula le compra mascara oscura a Pastoriza luego de subir de categoria" {
+		pastoriza.cambiarTipo()
+		ursula.comprarArtefacto(mascaraOscura, pastoriza)
+		assert.equals(88.2, ursula.monedasOro())
+	}
+	
+	test "Ursula le compra mascara oscura a Pastoriza luego de subir de categoria 2 veces" {
+		pastoriza.cambiarTipo()
+		pastoriza.cambiarTipo()
+		ursula.comprarArtefacto(mascaraOscura, pastoriza)
+		assert.equals(87.9, ursula.monedasOro())
+	}
+	
+	test "Ursula le compra mascara oscura a Prieto luego de subir de categoria" {
+		prieto.cambiarTipo()
+		ursula.comprarArtefacto(mascaraOscura, prieto)
+		assert.equals(88.25, ursula.monedasOro())
+	}
+	
+	test "Ursula le compra mascara oscura a Fermepin luego de subir de categoria" {
+		fermepin.cambiarTipo()
+		ursula.comprarArtefacto(mascaraOscura, fermepin)
+		assert.equals(88.25, ursula.monedasOro())
+	}
+}
