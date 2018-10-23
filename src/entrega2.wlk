@@ -80,7 +80,7 @@ class Personaje {
 class NPC inherits Personaje {
 
 	var property nivel
-	
+
 	constructor(_capacidadCarga, _nivel) = super(_capacidadCarga) {
 		nivel = _nivel
 	}
@@ -201,7 +201,7 @@ object hechizoComercial {
 	var property nombre = 'el hechizo comercial'
 	var property porcentaje = 0.2
 	var property multiplicador = 2
-	
+
 	method precio() = self.poder()
 
 	method poder() = nombre.size() * porcentaje * multiplicador

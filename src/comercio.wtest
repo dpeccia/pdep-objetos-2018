@@ -11,6 +11,7 @@ describe "Test de Comercio" {
 	const armadura = new Armadura()
 	const cotaDeMalla = new CotaDeMalla(refuerzo = 5)
 	const armaduraConMalla = new Armadura(refuerzo = cotaDeMalla)
+	const mockHnos = new ComercianteIndependiente()
 
 	fixture {
 		collarDivino.cantidadDePerlas(5)
@@ -41,26 +42,26 @@ describe "Test de Comercio" {
 	}
 
 	test "Monedas de Xenia al comprar una espada, un collar divino, una armadura sin refuerzo y otra armadura con malla de cota" {
-		xenia.agregarArtefacto(espadaDelDestino)
-		xenia.agregarArtefacto(collarDivino)
-		xenia.agregarArtefacto(armadura)
-		xenia.agregarArtefacto(armaduraConMalla)
-		assert.equals(70.5, xenia.monedasOro())
+		xenia.comprarArtefacto(espadaDelDestino, mockHnos)
+		xenia.comprarArtefacto(collarDivino, mockHnos)
+		xenia.comprarArtefacto(armadura, mockHnos)
+		xenia.comprarArtefacto(armaduraConMalla, mockHnos)
+		assert.equals(85.5, xenia.monedasOro())
 	}
 
 	test "Cantidad de artefactos de Xenia al comprar una espada, un collar divino, una armadura sin refuerzo y otra armadura con malla de cota" {
-		xenia.agregarArtefacto(espadaDelDestino)
-		xenia.agregarArtefacto(collarDivino)
-		xenia.agregarArtefacto(armadura)
-		xenia.agregarArtefacto(armaduraConMalla)
+		xenia.comprarArtefacto(espadaDelDestino, mockHnos)
+		xenia.comprarArtefacto(collarDivino, mockHnos)
+		xenia.comprarArtefacto(armadura, mockHnos)
+		xenia.comprarArtefacto(armaduraConMalla, mockHnos)
 		assert.equals(4, xenia.artefactos().size())
 	}
 
 	test "Monedas de Thor al obtener una armadura con bendición como refuerzo y una armadura reforzada con el hechizo alacachula" {
 		const armaduraConHechizoRaro = new Armadura(refuerzo = hechizo, valorBase = 2)
 		const armaduraConBendicion = new Armadura(refuerzo = bendicion, valorBase = 2)
-		thor.agregarArtefacto(armaduraConBendicion)
-		thor.agregarArtefacto(armaduraConHechizoRaro)
+		thor.comprarArtefacto(armaduraConBendicion, mockHnos)
+		thor.comprarArtefacto(armaduraConHechizoRaro, mockHnos)
 		assert.equals(74, thor.monedasOro())
 	}
 

@@ -5,13 +5,14 @@ describe "Test de Lucha" {
 	const rolando = new Personaje(capacidadCarga = 200)
 	const espadaDelDestino = new Arma()
 	const mascaraOscura = new Mascara()
+	const comerciante = new ComercianteIndependiente()
 
 	fixture {
 		mascaraOscura.indiceDeOscuridad(1)
 		collarDivino.cantidadDePerlas(5)
-		rolando.agregarArtefacto(espadaDelDestino)
-		rolando.agregarArtefacto(collarDivino)
-		rolando.agregarArtefacto(mascaraOscura)
+		rolando.comprarArtefacto(espadaDelDestino, comerciante)
+		rolando.comprarArtefacto(collarDivino, comerciante)
+		rolando.comprarArtefacto(mascaraOscura, comerciante)
 	}
 
 	test "Habilidad de lucha de Rolando es el valor base cuando no tiene artefactos" {
