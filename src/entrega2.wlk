@@ -237,9 +237,9 @@ class Arma inherits Artefacto {
 
 	var property puntosDeLucha = 3
 
-	method precio() = 5 * peso
+	override method precio() = 5 * peso
 
-	method puntosDeLucha(duenio) = puntosDeLucha
+	override method puntosDeLucha(duenio) = puntosDeLucha
 
 }
 
@@ -249,9 +249,9 @@ object collarDivino inherits Artefacto {
 
 	override method pesoTotal(duenio) = super(duenio) + 0.5 * cantidadDePerlas
 
-	method precio() = 2 * cantidadDePerlas
+	override method precio() = 2 * cantidadDePerlas
 
-	method puntosDeLucha(duenio) = cantidadDePerlas
+	override method puntosDeLucha(duenio) = cantidadDePerlas
 
 }
 
@@ -262,9 +262,9 @@ class Mascara inherits Artefacto {
 
 	override method pesoTotal(duenio) = super(duenio) + 0.max(self.puntosDeLucha(duenio) - 3) * indiceDeOscuridad
 
-	method precio() = 10 * indiceDeOscuridad
+	override method precio() = 10 * indiceDeOscuridad
 
-	method puntosDeLucha(duenio) = poderMinimo.max((fuerzaOscura.valor() / 2) * indiceDeOscuridad)
+	override method puntosDeLucha(duenio) = poderMinimo.max((fuerzaOscura.valor() / 2) * indiceDeOscuridad)
 
 }
 
@@ -278,6 +278,10 @@ class Artefacto {
 	method pesoTotal(duenio) = 0.max(peso - self.factorDeCorreccion())
 
 	method factorDeCorreccion() = 1.min(self.diasDesdeCompra() / 100)
+	
+	method precio()
+	
+	method puntosDeLucha(duenio)
 
 }
 
@@ -289,17 +293,17 @@ class Armadura inherits Artefacto {
 
 	override method pesoTotal(duenio) = super(duenio) + refuerzo.peso()
 
-	method precio() = refuerzo.precio(self)
+	override method precio() = refuerzo.precio(self)
 
-	method puntosDeLucha(duenio) = valorBase + refuerzo.valorDelRefuerzo(duenio)
+	override method puntosDeLucha(duenio) = valorBase + refuerzo.valorDelRefuerzo(duenio)
 
 }
 
 object espejo inherits Artefacto {
 
-	method precio() = 90
+	override method precio() = 90
 
-	method puntosDeLucha(duenio) {
+	override method puntosDeLucha(duenio) {
 		var artefactosSinEspejo
 		if (duenio.artefactos() === #{ self }) {
 			return 0
